@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
     count = count || '0'
     count = Number(count) + 1
     client.set("server:"+ID, ""+count+"")
-    res.send('<pre style="font-size:30px;">Hello World! served from: '+ID.substr(19, 9)+' served: '+count+' times');
+    res.send('<pre style="font-size:30px;">Hello World!\nserved from: '+ID.substr(19, 9)+'\nserved: '+count+' times');
   });
   
 });
