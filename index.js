@@ -3,8 +3,17 @@ var uuid = require('uuid')
 var app = express();
 var ID = uuid.v1();
 
+var redis = require("redis"),
+    client = redis.createClient();
+
 app.get('/', function (req, res) {
-  res.send('<pre style="font-size:30px;">Hello World! served from: '+ID.substr(0, 8));
+  client.get("server:"+ID, function(err, count) {
+    count = count || '0'
+    count = Number(count) + 1
+    client.set("server:"+ID, ""+count+"")
+    res.send('<pre style="font-size:30px;">Hello World! served from: '+ID.substr(0, 8)+' served: '+count+' times');
+  });
+  
 });
 
 var server = app.listen(3000, function () {
